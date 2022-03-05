@@ -2,9 +2,9 @@
   grid-area: n;
   background-color: rgb(110, 236, 184);
 }
-.item a {
+.item {
   color: beige;
 }
-.item.active a {
+.item:focus {
   color: coral;
 }

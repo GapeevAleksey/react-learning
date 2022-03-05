@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Profile.module.css';
 import MyPosts from './MyPosts/MyPosts';
+import { NavLink } from 'react-router-dom';
 
 const Profile = (props) => {
   return (
@@ -13,5 +14,4 @@ const Profile = (props) => {
     </div>
   );
 };
-
 export default Profile;
