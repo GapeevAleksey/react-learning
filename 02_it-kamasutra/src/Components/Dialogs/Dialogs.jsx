@@ -1,8 +1,7 @@
 import React from 'react';
 import s from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import Message from './Messages/Messages';
 
 const dialogsList = [
   {
@@ -48,38 +47,20 @@ const messagesData = [
   },
 ];
 
-const Message = (props) => {
-  console.log(props);
-  return (
-    <div className={s.messagesItems}>
-      {props.textArray.map((item, index) => {
-        return <div>{item}</div>;
-      })}
-    </div>
-  );
-};
-
 const Dialogs = (props) => {
+  const dialogsElements = dialogsList.map((item) => {
+    return <Dialog id={item.id} name={item.name} userpic={item.userpic} />;
+  });
+  const messagesElements = messagesData.map((item) => {
+    return <Message textArray={item.messageText} />;
+  });
+
   return (
     <div className={s.dialogs}>
-      <div className={s.dialogsItems}>
-        {dialogsList.map((item, index) => {
-          return <Dialog {...dialogsList[index]} />;
-        })}
-      </div>
+      <div className={s.dialogsItems}>{dialogsElements}</div>
 
       <div className={s.messages}>
-        {dialogsList.map((item, index) => {
-          return <Message textArray={messagesData[index].messageText} />;
-        })}
-
-        {/* <BrowserRouter>
-          <Routes>
-            <Route path="/dialogs/1" element="1" />
-            <Route path="/dialogs/2" element="2" />
-            <Route path="/dialogs/3" element="3" />
-          </Routes>
-        </BrowserRouter> */}
+        {messagesElements}
       </div>
     </div>
   );
