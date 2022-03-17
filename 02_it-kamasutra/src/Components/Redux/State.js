@@ -18,7 +18,7 @@ export const state = {
       },
     ],
   },
-  messagesPage: {
+  dialogsPage: {
     dialogsList: [
       {
         id: 1,
