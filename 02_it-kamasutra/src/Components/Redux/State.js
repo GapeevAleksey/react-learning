@@ -65,3 +65,11 @@ export const state = {
     ],
   },
 };
+export const addPost = (postMessage) => {
+  let newPost = {
+    key: 6,
+    message: postMessage,
+    url: 'https://img.uslugio.com/img3/5d/a6/5da640b6a76a752a539103aa7d53e8ec.jpg',
+  };
+  state.profilePage.posts.push(newPost);
+};
