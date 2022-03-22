@@ -19,6 +19,7 @@ export const state = {
         url: 'https://cdn.100sp.ru/cache_pictures/123203262/thumb300?v=2',
       },
     ],
+    newPostText: 'React/Redux lessons',
   },
   dialogsPage: {
     dialogsList: [
@@ -67,13 +68,17 @@ export const state = {
     ],
   },
 };
-export const addPost = (postMessage) => {
+export const addPost = () => {
   let newPost = {
     id: 4,
-    message: postMessage,
+    message: state.profilePage.newPostText,
     url: 'https://img.uslugio.com/img3/5d/a6/5da640b6a76a752a539103aa7d53e8ec.jpg',
   };
-  state.profilePage.posts.push(newPost);
-  console.log(state.profilePage.posts);
-  rerenderDOM(state, addPost);
+  state.profilePage.posts.unshift(newPost);
+  rerenderDOM(state, addPost, updateNewPostText);
+  state.profilePage.newPostText = '';
+};
+export const updateNewPostText = (newText) => {
+  state.profilePage.newPostText = newText;
+  rerenderDOM(state, addPost, updateNewPostText);
 };

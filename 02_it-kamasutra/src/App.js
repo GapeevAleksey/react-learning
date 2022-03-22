@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import { addPost } from './Components/Redux/state';
 
 function App(props) {
   return (
@@ -20,7 +19,13 @@ function App(props) {
             <Route path="/dialogs" element={<Dialogs state={props.state.dialogsPage} />} />
             <Route
               path="/profile"
-              element={<Profile state={props.state.profilePage} addPost={props.addPost} />}
+              element={
+                <Profile
+                  profilePage={props.state.profilePage}
+                  addPost={props.addPost}
+                  updateNewPostText={props.updateNewPostText}
+                />
+              }
             />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
