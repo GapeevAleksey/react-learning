@@ -1,12 +1,17 @@
 import React, { createRef } from 'react';
+import { rerenderDOM } from '../../../render';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
   const postsElements = props.posts.map((post) => {
-    return <Post key={post.key} message={post.message} url={post.url} />;
+    return <Post id={post.id} message={post.message} url={post.url} />;
   });
-  let newPostElement = createRef();
+  let newPostElement = React.createRef();
+  let addPost = () => {
+    let text = newPostElement.current.value;
+    props.addPost(text);
+  };
 
   return (
     <div>
@@ -15,7 +20,7 @@ const MyPosts = (props) => {
         <textarea ref={newPostElement}></textarea>
       </div>
       <div>
-        <button onClick={props.addPost(newPostElement)}>Add post</button>
+        <button onClick={addPost}>Add post</button>
       </div>
       <div className={s.post}>{postsElements}</div>
     </div>

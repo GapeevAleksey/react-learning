@@ -1,18 +1,20 @@
+import { rerenderDOM } from '../../render';
+
 export const state = {
   profilePage: {
     posts: [
       {
-        key: 1,
+        id: 1,
         message: 'Hello! This is my second post!',
         url: 'https://oboi.ws/filters/vibrance_19_7314_oboi_krasivaja_buhta_240x320.jpg',
       },
       {
-        key: 2,
+        id: 2,
         message: "Hi. It's a first post",
         url: 'https://cdn.100sp.ru/cache_pictures/123203262/thumb300?v=2',
       },
       {
-        key: 3,
+        id: 3,
         message: "Hi. It's a third post",
         url: 'https://cdn.100sp.ru/cache_pictures/123203262/thumb300?v=2',
       },
@@ -67,9 +69,11 @@ export const state = {
 };
 export const addPost = (postMessage) => {
   let newPost = {
-    key: 6,
+    id: 4,
     message: postMessage,
     url: 'https://img.uslugio.com/img3/5d/a6/5da640b6a76a752a539103aa7d53e8ec.jpg',
   };
   state.profilePage.posts.push(newPost);
+  console.log(state.profilePage.posts);
+  rerenderDOM(state, addPost);
 };
