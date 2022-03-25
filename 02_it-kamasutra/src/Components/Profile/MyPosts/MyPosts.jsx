@@ -1,15 +1,17 @@
 import React from 'react';
+import { store } from '../../Redux/state';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
+  console.log(props);
   const postsElements = props.profilePage.posts.map((post) => {
     return <Post id={post.id} message={post.message} url={post.url} />;
   });
   let newPostElement = React.createRef();
 
   let addPost = () => {
-    props.addPost();
+    props.addPost.call(store); // изменить на правильный контекст и удалить import { store } from '../../Redux/state';
   };
 
   const onChangePost = () => {
