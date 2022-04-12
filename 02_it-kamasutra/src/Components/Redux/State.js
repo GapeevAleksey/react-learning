@@ -1,5 +1,7 @@
 const ADD_POST = 'ADD-POST',
-  UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+  UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT',
+  UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT',
+  SEND_MESSAGE = 'SEND-MESSAGE';
 
 export let store = {
   _state: {
@@ -68,10 +70,11 @@ export let store = {
           messageText: ['computer', 'hand-people', 'className'],
         },
       ],
+      newMessageText: 'New text...',
     },
   },
-  _callSubscriber() {
-    console.log('State changed!');
+  _callSubscriber(state) {
+    console.log('State changed!', state);
   },
 
   getState() {
@@ -89,18 +92,38 @@ export let store = {
         url: 'https://img.uslugio.com/img3/5d/a6/5da640b6a76a752a539103aa7d53e8ec.jpg',
       };
       this._state.profilePage.posts.unshift(newPost);
-      this._callSubscriber();
+      this._callSubscriber(this._state);
       this._state.profilePage.newPostText = '';
 
       console.log(this._state.profilePage.posts);
-    } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+    } else if (action.type === UPDATE_NEW_POST_TEXT) {
       this._state.profilePage.newPostText = action.newText;
-      this._callSubscriber();
+      this._callSubscriber(this._state);
+    } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+      this._state.dialogsPage.newMessageText = action.messageBody;
+      this._callSubscriber(this._state);
+    } else if (action.type === SEND_MESSAGE) {
+      let messageBody = this._state.dialogsPage.newMessageText;
+
+      const newMessage = {
+        id: Math.floor(Math.random() * 1000),
+        messageText: [messageBody],
+      };
+      this._state.dialogsPage.newMessageText = '';
+      this._state.dialogsPage.messagesData.push(newMessage);
+      this._callSubscriber(this._state);
     }
   },
 };
+
 export const addPostActionCreater = () => ({ type: ADD_POST });
 export const updateNewPostTextActionCreater = (text) => ({
   type: UPDATE_NEW_POST_TEXT,
   newText: text,
+});
+
+export const sendMessageCreater = () => ({ type: SEND_MESSAGE });
+export const updateNewMessageBodyCreater = (messageBody) => ({
+  type: UPDATE_NEW_MESSAGE_TEXT,
+  messageBody: messageBody,
 });
