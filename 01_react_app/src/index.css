@@ -15,3 +15,12 @@ code {
   margin: 0 auto;
   width: 600px;
 }
+.rm {
+  background: rgb(228, 116, 116);
+  border-radius: 50%;
+  color: aliceblue;
+  border: none;
+}
+.done {
+  text-decoration: line-through;
+}
