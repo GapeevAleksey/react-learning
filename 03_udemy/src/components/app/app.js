@@ -6,6 +6,27 @@ import SearchPanel from '../search-panel/search-panel';
 import stylesApp from './app.module.css';
 
 function App() {
+  const employeesDB = [
+    {
+      name: 'Alex Nose',
+      salary: 15000,
+      increase: false,
+      id: 1,
+    },
+    {
+      name: 'Mike Shinoda',
+      salary: 7000,
+      increase: true,
+      id: 2,
+    },
+    {
+      name: 'Alice Cooper',
+      salary: 2000,
+      increase: false,
+      id: 3,
+    },
+  ];
+
   return (
     <div className={stylesApp.app}>
       <AppInfo />
@@ -13,8 +34,8 @@ function App() {
         <SearchPanel />
         <AppFilter />
       </div>
-        <EmployeesList />
-      <EmployeesAddForm/>
+      <EmployeesList employeesDB={employeesDB} />
+      <EmployeesAddForm />
     </div>
   );
 }
