@@ -3,6 +3,7 @@ import AppInfo from '../app-info/app-info';
 import EmployeesAddForm from '../employees-add-form/employees-add-form';
 import EmployeesList from '../employees-list/employees-list';
 import SearchPanel from '../search-panel/search-panel';
+import WhoAmI from '../test-component/test-component';
 import stylesApp from './app.module.css';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
       </div>
       <EmployeesList employeesDB={employeesDB} />
       <EmployeesAddForm />
+      <WhoAmI data={employeesDB}/>
     </div>
   );
 }
