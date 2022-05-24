@@ -21,7 +21,7 @@ class WhoAmI extends Component {
     this.setState({ position: e.target.value });
   };
   render() {
-    const { name, salary } = this.props.data[1];
+    const { name, salary } = this.props.data[0];
     const { position, premia } = this.state;
     console.log(this.stateInfo);
     return (
