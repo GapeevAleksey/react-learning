@@ -28,12 +28,14 @@ class App extends Component {
         },
         {
           name: 'Alice Cooper',
-          salary: 2000,
+          salary: 200,
           increase: false,
           rise: false,
           id: 3,
         },
       ],
+      term: '',
+      onSort: 'all',
     };
   }
   deleteItem = (id) => {
@@ -62,7 +64,7 @@ class App extends Component {
 
   onToggleProp = (id, prop) => {
     this.setState(({ data }) => {
-          const newArr = data.map((employee) => {
+      const newArr = data.map((employee) => {
         if (employee.id === id) {
           return { ...employee, [prop]: !employee[prop] };
         }
@@ -74,12 +76,41 @@ class App extends Component {
     });
   };
 
+  searchEmployees = (items, term) => {
+    if (!term) {
+      return items;
+    }
+    return items.filter((item) => item.name.indexOf(term) > -1);
+  };
+
+  onUpdateSearch = (term) => {
+    this.setState({ term });
+  };
+
+  onSortEmployees = (items, onSort) => {
+    switch (onSort) {
+      case 'onRise':
+        return items.filter((item) => item.rise);
+      case 'more1000$':
+        return items.filter((item) => item.salary > 1000);
+      default:
+        return items;
+    }
+  };
+  onUpdateSort = (onSort) => {
+    this.setState({ onSort });
+  };
+
   render() {
-    const { data } = this.state;
+    const { data, term, onSort } = this.state;
     const amountEmployees = this.state.data.length;
     const amountIncreaseEmployees = this.state.data.filter(
       (item) => item.increase
     ).length;
+    const visibleData = this.onSortEmployees(
+      this.searchEmployees(data, term),
+      onSort
+    );
     return (
       <div className={stylesApp.app}>
         <AppInfo
@@ -87,11 +118,11 @@ class App extends Component {
           amountIncreaseEmployees={amountIncreaseEmployees}
         />
         <div className="search-panel">
-          <SearchPanel />
-          <AppFilter />
+          <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+          <AppFilter onUpdateSort={this.onUpdateSort} />
         </div>
         <EmployeesList
-          data={data}
+          data={visibleData}
           onDelete={this.deleteItem}
           onToggleProp={this.onToggleProp}
         />
