@@ -4,7 +4,7 @@ import AppInfo from '../app-info/app-info';
 import EmployeesAddForm from '../employees-add-form/employees-add-form';
 import EmployeesList from '../employees-list/employees-list';
 import SearchPanel from '../search-panel/search-panel';
-// import WhoAmI from '../test-component/test-component';
+import ToDoApp from '../todo-app/todo-app';
 import stylesApp from './app.module.css';
 
 class App extends Component {
@@ -102,6 +102,7 @@ class App extends Component {
   };
 
   render() {
+    console.log(this.state.onSort);
     const { data, term, onSort } = this.state;
     const amountEmployees = this.state.data.length;
     const amountIncreaseEmployees = this.state.data.filter(
@@ -127,7 +128,7 @@ class App extends Component {
           onToggleProp={this.onToggleProp}
         />
         <EmployeesAddForm onAdd={this.addEmployee} />
-        {/* <WhoAmI data={data} /> */}
+        <ToDoApp />
       </div>
     );
   }
