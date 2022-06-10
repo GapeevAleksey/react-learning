@@ -29,9 +29,7 @@ class BBBComponent extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(this.state.newUser),
-    })
-      .then((res) => res.json())
-      
+    }).then((res) => res.json());
   };
   onDeleteUser = () => {};
 

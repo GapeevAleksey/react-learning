@@ -1,5 +1,6 @@
 // import AAAComponent from '../AAAComponent/AAAComponent';
 // import BBBComponent from '../AAAComponent/BBBComponent';
+// import CCC from '../AAAComponent/CCC';
 
 import AppHeader from '../appHeader/AppHeader';
 import RandomChar from '../randomChar/RandomChar';
@@ -13,6 +14,7 @@ const App = () => {
     <div className="app">
       {/* <AAAComponent /> */}
       {/* <BBBComponent /> */}
+      {/* <CCC /> */}
       <AppHeader />
       <main>
         <RandomChar />

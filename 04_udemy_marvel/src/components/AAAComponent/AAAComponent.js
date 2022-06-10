@@ -11,11 +11,10 @@ export default class AAAComponent extends Component {
   }
   componentDidMount() {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail')
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then(
         (result) => {
+          console.log(result);
           this.setState({
             isLoaded: true,
             items: result.drinks,
