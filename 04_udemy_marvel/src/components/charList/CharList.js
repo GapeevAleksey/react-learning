@@ -1,45 +1,67 @@
 import './charList.scss';
 import { Component } from 'react';
-import abyss from '../../resources/img/abyss.jpg';
 import MarvelService from '../../services/MarvelService';
 
 class CharList extends Component {
   state = {
     comics: [],
-    comicsShown: 9,
+    newComicsLoading: false,
+    limit: 9,
+    offset: 0,
   };
   MarvelService = new MarvelService();
 
   getComicsList = async () => {
-    const data = await this.MarvelService.getAllCharacters();
-    this.setState({ comics: data });
+    this.onComicsLoading();
+    const { limit, offset } = this.state;
+    const data = await this.MarvelService.getAllCharacters(limit, offset);
+    this.setState({ newComicsLoading: false });
+    this.setState(() => {
+      return {
+        comics: [...this.state.comics, ...data],
+      };
+    });
+  };
+
+  onComicsLoading = () => {
+    this.setState({ newComicsLoading: true });
   };
 
   componentDidMount() {
     this.getComicsList();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.offset < this.state.offset) {
+      this.getComicsList();
+    }
+  }
+
   render() {
-    console.log(this.state.comics);
-    const { comics, comicsShown } = this.state;
+    const { comics, limit, newComicsLoading } = this.state;
     return (
       <div className="char__list">
         <ul className="char__grid">
           {comics.map((item, index) => {
-            if (index < comicsShown) {
-              return (
-                <li key={item.id} className="char__item">
-                  <img src={item.thumbnail} alt="abyss" />
-                  <div className="char__name">{item.name}</div>
-                </li>
-              );
-            }
-            return null;
+            return (
+              <li
+                className="char__item"
+                key={index}
+                onClick={() => this.props.onCharSelected(item.id)}
+              >
+                <img src={item.thumbnail} alt="abyss" />
+                <div className="char__name">{item.name}</div>
+              </li>
+            );
           })}
         </ul>
         <button
           className="button button__main button__long"
+          disabled={newComicsLoading}
           onClick={() => {
-            this.setState({ comicsShown: this.state.comicsShown + 9 });
+            this.setState(() => {
+              return { offset: this.state.offset + limit };
+            });
           }}
         >
           <div className="inner">load more</div>
