@@ -15,6 +15,12 @@ class App extends Component {
   state = {
     selectedChar: null,
   };
+  buttons = [
+    { id: 1, name: 'users', title: 'Users' },
+    { id: 2, name: 'posts', title: 'Posts' },
+    { id: 3, name: 'todos', title: 'ToDos' },
+    { id: 4, name: 'albums', title: 'Albums' },
+  ];
   onCharSelected = (id) => {
     this.setState({ selectedChar: id });
   };
@@ -24,7 +30,7 @@ class App extends Component {
       <div className="app">
         {/* <AAAComponent /> */}
         {/* <BBBComponent /> */}
-        <CCC />
+        <CCC buttons={this.buttons}/>
         {/* <Forma>
           <h1>Hello</h1>
           <h2>Bye!!!</h2>

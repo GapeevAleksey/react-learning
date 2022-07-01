@@ -1,72 +1,43 @@
-import { Component, useState, useEffect } from 'react';
+import { Component, useState, useEffect, useCallback } from 'react';
+import './CCC.css';
 
-// class CCC extends Component {
-//   state = {
-//     info: [],
-//     posts: [],
-//   };
-//   //   getDatainfo = () => {
-//   //     fetch('https://jsonplaceholder.typicode.com/info')
-//   //       .then((result) => result.json())
-//   //       .then((res) => this.setState({ info: res }));
-//   //   };
+const CCC = ({ buttons }) => {
+  const [info, setInfo] = useState({ data: [], loaded: 'users' });
 
-//   getDatainfo = async () => {
-//     try {
-//       const data = await fetch('https://jsonplaceholder.typicode.com/info');
-//       const result = await data.json();
-//       this.setState({ info: result });
-//       console.log(data);
-//       console.log(result);
-//     } catch (error) {
-//       console.log('Error >> ', error);
-//     }
-//   };
+  // const getData = useCallback(
+  //   (whatLoad) => {
+  //     fetch(`https://jsonplaceholder.typicode.com/${whatLoad}`)
+  //       .then((response) => response.json())
+  //       .then((result) => setInfo({ data: [...result], loaded: whatLoad }));
+  //     console.log(info);
+  //   },
+  //   [info.loaded]
+  // );
 
-//   componentDidMount() {
-//     this.getDatainfo();
-//   }
-
-//   render() {
-//     return (
-//       <>
-//         <form>
-//           <button>Click</button>
-//         </form>
-//         <ul>
-
-//           {this.state.info.map((item) => {
-//             return <li key={item.id}>{item.name}</li>;
-//           })}
-//         </ul>
-//       </>
-//     );
-//   }
-// }
-
-const CCC = () => {
-  const buttons = [
-    { id: 1, name: 'users', title: 'Users' },
-    { id: 2, name: 'posts', title: 'Posts' },
-    { id: 3, name: 'todos', title: 'ToDos' },
-    { id: 4, name: 'albums', title: 'Albums' },
-  ];
-  const [info, setInfo] = useState({ data: [], loaded: false });
-  const [whatShow, setWhatShow] = useState('users');
   const getData = (whatLoad) => {
     fetch(`https://jsonplaceholder.typicode.com/${whatLoad}`)
       .then((response) => response.json())
-      .then((result) =>
-        setInfo((prev) => {
-          return { ...prev, data: [...result] };
-        })
-      );
+      .then((result) => setInfo({ data: [...result], loaded: whatLoad }));
     console.log(info);
   };
+
   const changeData = (whatShow) => {
-    setWhatShow(whatShow);
+    setInfo((prev) => {
+      return { data: [...prev.data], loaded: whatShow };
+    });
   };
-  useEffect(() => getData(whatShow), [whatShow]);
+
+  const deleteItem = (id) => {
+    const newInfo = info.data.filter((item) => item.id !== id);
+
+    setInfo((prev) => ({ data: newInfo, loaded: prev.loaded }));
+    console.log(id);
+  };
+
+  useEffect(() => {
+    console.log('render');
+    return getData(info.loaded);
+  }, [info.loaded]);
 
   return (
     <>
@@ -77,7 +48,11 @@ const CCC = () => {
               key={button.id}
               style={{ marginBottom: '10px' }}
               type="button"
-              className="btn btn-secondary"
+              className={
+                info.loaded === button.name
+                  ? 'btn btn-warning'
+                  : 'btn btn-primary'
+              }
               onClick={(e) => {
                 e.preventDefault();
                 changeData(button.name);
@@ -92,9 +67,19 @@ const CCC = () => {
         {info.data.map((item) => {
           return (
             <li key={item.id} className="list-group-item">
+              {item.id + '. '}
               {item.name ? item.name : null}
               {item.title ? item.title : null}
               {item.email ? ': ' + item.email : null}
+              <button
+                className="btn btn-danger"
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteItem(item.id);
+                }}
+              >
+                Удалить
+              </button>
             </li>
           );
         })}
