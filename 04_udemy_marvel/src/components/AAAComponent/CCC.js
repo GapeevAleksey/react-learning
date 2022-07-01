@@ -72,7 +72,7 @@ const CCC = ({ buttons }) => {
               {item.title ? item.title : null}
               {item.email ? ': ' + item.email : null}
               <button
-                className="btn btn-danger"
+                className="btn btn-danger btn-sm"
                 onClick={(e) => {
                   e.preventDefault();
                   deleteItem(item.id);
