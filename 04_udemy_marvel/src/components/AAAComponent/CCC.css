@@ -2,3 +2,10 @@ li.list-group-item {
   display: flex;
   justify-content: space-between;
 }
+.btn-danger {
+  display: none;
+}
+
+li.list-group-item:hover > .btn-danger {
+  display: block;
+}
